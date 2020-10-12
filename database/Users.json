@@ -1,0 +1,16 @@
+{ 
+    "_id" : ObjectId("5f84c2de5bd6b55b71fb2eef"), 
+    "username" : "bob", 
+    "password" : "bob", 
+    "email" : "bob@yahoo.com", 
+    "firstName" : "John", 
+    "lastName" : "Strumia", 
+    "phone" : "9085176954", 
+    "zip" : "56754", 
+    "state" : "NJ", 
+    "ip" : "255.255.255.255", 
+    "creditCard" : "4343", 
+    "dateCreated" : Timestamp(1602536159, 1), 
+    "birthday" : ISODate("1990-12-10T07:35:00.000+0000"), 
+    "age" : NumberInt(30)
+}
