@@ -1,0 +1,48 @@
+{ 
+    "_id" : ObjectId("5f84cfbc4a9e73506bbc75b1"), 
+    "title" : "Blackberry Raffle", 
+    "description" : "Enter to win big!", 
+    "company" : "Onward Mobility", 
+    "startTime" : Timestamp(1602539453, 1), 
+    "endTime" : Timestamp(1602539453, 2), 
+    "complete" : false, 
+    "products" : [
+        {
+            "productName" : "Black Berry Phone", 
+            "productID" : 1.0, 
+            "ProductDescription" : "flip phone", 
+            "dateCreated" : Timestamp(0, 0), 
+            "winner" : [
+                "N/A"
+            ], 
+            "productImage" : "phone", 
+            "size" : false
+        }, 
+        {
+            "productName" : "shirt", 
+            "productID" : 2.0, 
+            "ProductDescription" : "select a size", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "winner" : [
+                "N/A"
+            ], 
+            "productImage" : "shirt", 
+            "size" : [
+                "XL", 
+                "Large"
+            ]
+        }
+    ], 
+    "entries" : [
+        {
+            "user" : "user1", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }
+    ]
+}
