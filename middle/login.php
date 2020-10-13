@@ -7,8 +7,8 @@ ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
 error_reporting(-1);
 
-$username = $_POST["username"];
-$password = $_POST["password"];
+$username = $_POST["uname"];
+$password = $_POST["pswd"];
 
 //initiates the database connection
 $mongoURL = "mongodb://" . $dbUsername . ":" . $dbPassword . "@" . $host . ":" . $port . "/?authSource=admin";
