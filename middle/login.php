@@ -24,6 +24,7 @@ catch(MongoDB\Driver\Exception\ConnectionTimeoutException $e)
 $collection = $client
     ->Raffly->Users;
 
+
 //checks if username field is an email or a username and changes the field to the email or username field
 if (filter_var($username, FILTER_VALIDATE_EMAIL))
 {
@@ -41,19 +42,20 @@ if ($result['username'] == $username)
     if (password_verify($password, $result['password']))
     {
         echo "User authenticated";
-        $session_start();
+        session_start();
         $_SESSION["username"] = $username;
 
     }
     else
     {
-        echo "Error: Incorrect password";
+        
+        echo "<strong>Error: Incorrect password</strong>";
         exit();
     }
 }
 else
 {
-    echo "Error: Username does not exist!";
+    echo "<strong>Error: Username does not exist!</strong>";
     exit();
 }
 ?>
