@@ -2,6 +2,19 @@
 <html>
 
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-180737154-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-180737154-1');
+    </script>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="twitter:card" content="summary_large_image" />
@@ -29,6 +42,9 @@
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfVvtcZAAAAAFpzlwj5OYgKTnB26nWHQ_VMLCt4"></script>
+    <!-- <script src="https://www.google.com/recaptcha/api.js"></script> -->
+    
 </head>
 
 <body>
@@ -51,9 +67,8 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="media-container-column col-lg-8" data-form-type="formoid">
-                    <!---Formbuilder Form--->
+                    
                     <form action="dump.php" method="POST" id="registration" autocomplete="off">
-                        <!-- <input type="hidden" name="email" data-form-email="true" value="EDsAqzZctx27WIinFUXi52xOupvzzAs7+fvdQYK42C7v7RO4sVnMUcOLydBXqGpHQYcQXE5WaTQSko5t7np1WEzOIkeEiLitp/lqKSDK0bE29b0q4XDG0QC81DaJlSXX"> -->
                         <div class="row">
                             <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Thanks for filling out the form!</div>
                             <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">
@@ -61,6 +76,7 @@
                         </div>
                         <div class="dragArea row">
                             <div class="col-md-12  form-group" data-for="name">
+                                <input type="hidden" name="ip" id="ipaddress">
                                 <label for="fname-form1-9" class="form-control-label mbr-fonts-style display-7"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;First Name</label>
                                 <input type="text" name="fname" data-form-field="Firstname" required="required" class="form-control display-7" id="fname-form1-9">
 
@@ -101,13 +117,16 @@ Zip Code</label>
 
                                 <label for="card" class="form-control-label mbr-fonts-style display-7"><i class="fa fa-credit-card" aria-hidden="true"></i>
 Last Four of Credit Card</label>
-                                <input name="card" data-form-field="Card" class="form-control display-7" id="card-form1-9">
+                                <input type="number" name="card" data-form-field="Card" class="form-control display-7" id="card-form1-9" required>
+                                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                             </div>
-                            <div class="col-md-12 input-group-btn align-center"><button type="submit" class="btn btn-form btn-primary display-4">Submit</button></div>
-                        </div>
+          
+                            <div class="col-md-12 input-group-btn align-center">
+                                <button type="submit" class="btn btn-form btn-primary display-4" onclick="onClick(event)">Submit</button></div>
+                            </div>
                         <span class="gdpr-block">
 <label>
-<span class="textGDPR display-7" style="color: #a7a7a7"><input type="checkbox" name="gdpr" id="gdpr-form1-9" required="">By continuing you agree to our <a style="color: #149dcc; text-decoration: underline;" href="terms.html">Terms of Service</a> and <a style="color: #149dcc; text-decoration: underline;" href="policy.html">Privacy Policy</a>.</span>
+<span class="textGDPR display-7" style="color: #a7a7a7"><input type="checkbox" name="gdpr" form="registration" id="gdpr-form1-9" required>By continuing you agree to our <a style="color: #149dcc; text-decoration: underline;" href="terms.html">Terms of Service</a> and <a style="color: #149dcc; text-decoration: underline;" href="policy.html">Privacy Policy</a>.</span>
                         </label>
                         </span>
                     </form>
@@ -130,18 +149,12 @@ Last Four of Credit Card</label>
                         <li class="foot-menu-item mbr-fonts-style display-7">
                             <a class="text-white mbr-bold" href="#" target="_blank">About Us</a>
                         </li>
-                        <li class="foot-menu-item mbr-fonts-style display-7"><a class="text-white mbr-bold" href="#" target="_blank">Missio</a>n</li>
+                        <li class="foot-menu-item mbr-fonts-style display-7"><a class="text-white mbr-bold" href="#" target="_blank">Mission</a></li>
                         <li class="foot-menu-item mbr-fonts-style display-7"><a class="text-white mbr-bold" href="#" target="_blank">Partners</a></li>
                     </ul>
                 </div>
                 <div class="row social-row">
                     <div class="social-list align-right pb-2">
-
-
-
-
-
-
                         <div class="soc-item">
                             <a href="https://twitter.com" target="_blank">
                                 <span class="mbr-iconfont mbr-iconfont-social socicon-twitter socicon"></span>
@@ -211,21 +224,14 @@ Last Four of Credit Card</label>
         </nav>
     </section>
 
-    <script>
-        var password = document.getElementById("psw-form1-9"),
-            confirm_password = document.getElementById("psw2-form1-9");
-
-        function validatePassword() {
-            if (password.value != confirm_password.value) {
-                confirm_password.setCustomValidity("Passwords Don't Match");
-            } else {
-                confirm_password.setCustomValidity('');
-            }
+    <script type="application/javascript">
+        function getIP(json) {
+            document.getElementById("ipaddress").value = json.ip;
         }
-
-        password.onchange = validatePassword;
-        confirm_password.onkeyup = validatePassword;
     </script>
+
+    <script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+
 
     <script src="assets/web/assets/jquery/jquery.min.js"></script>
     <script src="assets/popper/popper.min.js"></script>
@@ -240,8 +246,39 @@ Last Four of Credit Card</label>
     <script src="assets/shopping-cart/jquery.easing.min.js"></script>
     <script src="assets/shopping-cart/minicart-customizer.js"></script>
     <script src="assets/theme/js/script.js"></script>
-    <!-- <script src="assets/formoid/formoid.min.js"></script> -->
+    
+    <script>
+        var password = document.getElementById("psw-form1-9"),
+        confirm_password = document.getElementById("psw2-form1-9");
 
+        function validatePassword() {
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+    </script>
+    
+    <script>
+        function onClick(e) {
+        e.preventDefault();
+        grecaptcha.ready(function() {
+          grecaptcha.execute('6LfVvtcZAAAAAFpzlwj5OYgKTnB26nWHQ_VMLCt4', {action: 'submit'}).then(function(token) {
+          console.log(token);
+          document.getElementById("g-recaptcha-response").value = token;
+          document.getElementById("registration").submit();
+          });
+        });
+      }
+
+        
+        
+        
+    </script>
 
 </body>
 
