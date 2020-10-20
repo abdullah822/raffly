@@ -31,21 +31,26 @@ class Mongod
   {
     //set which collection to instert to
     $collection = $client->Raffly->Users;
-    $date       = date_create();
-    $user       = array(
-          "username"    => $_POST['uname'],
-          "password"    => $_POST['psw'],
-          "email"       => $_POST['email'],
-          "firstName"   => $_POST['fname'],
-          "lastName"    => $_POST['lname'],
-          "phone"       => $_POST['phone'],
-          "zip"         => $_POST['zip'],
-          "state"       => $_POST['state'],
-          "ip"          => '123',
-          "creditCard"  => $_POST['card'],
-          "dateCreated" => $date,
-          "birthday"    => $_POST['date']
-      );
+
+$age = date_diff(date_create($_POST['date']), date_create('now'), True)->y;
+$date=date_create('now');
+$user  = array(
+      "username"    => $_POST['uname'],
+      "password"    => $_POST['psw'],
+      "email"       => $_POST['email'],
+      "firstName"   => $_POST['fname'],
+      "lastName"    => $_POST['lname'],
+      "phone"       => $_POST['phone'],
+      "zip"         => $_POST['zip'],
+      "state"       => $_POST['state'],
+      "ip"          => $_POST['ip'],
+      "creditCard"  => $_POST['card'],
+      "dateCreated" => $date,
+      "birthday"    => $_POST['date'],
+      "age"         => $age
+  );
+
+
 
     //insert data
     $result = $collection->insertOne($user);
