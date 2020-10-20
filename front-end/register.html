@@ -44,7 +44,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://www.google.com/recaptcha/api.js?render=6LfVvtcZAAAAAFpzlwj5OYgKTnB26nWHQ_VMLCt4"></script>
     <!-- <script src="https://www.google.com/recaptcha/api.js"></script> -->
-    
+
 </head>
 
 <body>
@@ -67,8 +67,8 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="media-container-column col-lg-8" data-form-type="formoid">
-                    
-                    <form action="dump.php" method="POST" id="registration" autocomplete="off">
+
+                    <form action="../src/register.php" method="POST" id="registration" autocomplete="off">
                         <div class="row">
                             <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Thanks for filling out the form!</div>
                             <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">
@@ -120,7 +120,7 @@ Last Four of Credit Card</label>
                                 <input type="number" name="card" data-form-field="Card" class="form-control display-7" id="card-form1-9" required>
                                 <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                             </div>
-          
+
                             <div class="col-md-12 input-group-btn align-center">
                                 <button type="submit" class="btn btn-form btn-primary display-4" onclick="onClick(event)">Submit</button></div>
                             </div>
@@ -218,7 +218,7 @@ Last Four of Credit Card</label>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                 <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-primary display-4" href="index.html">
-                    
+
                     Home</a> <a class="btn btn-sm btn-primary display-4" href="shop.html">Raffles</a></div>
             </div>
         </nav>
@@ -246,7 +246,7 @@ Last Four of Credit Card</label>
     <script src="assets/shopping-cart/jquery.easing.min.js"></script>
     <script src="assets/shopping-cart/minicart-customizer.js"></script>
     <script src="assets/theme/js/script.js"></script>
-    
+
     <script>
         var password = document.getElementById("psw-form1-9"),
         confirm_password = document.getElementById("psw2-form1-9");
@@ -262,7 +262,7 @@ Last Four of Credit Card</label>
         password.onchange = validatePassword;
         confirm_password.onkeyup = validatePassword;
     </script>
-    
+
     <script>
         function onClick(e) {
         e.preventDefault();
@@ -275,9 +275,9 @@ Last Four of Credit Card</label>
         });
       }
 
-        
-        
-        
+
+
+
     </script>
 
 </body>
