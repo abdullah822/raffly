@@ -6,26 +6,64 @@
     "startTime" : Timestamp(1602539453, 1), 
     "endTime" : Timestamp(1602539453, 2), 
     "complete" : false, 
+    "winner" : [
+        {
+            "username" : "user2", 
+            "token" : "9696406"
+        }, 
+        {
+            "username" : "user2", 
+            "token" : "1991578"
+        }, 
+        {
+            "username" : "user2", 
+            "token" : "3682554"
+        }, 
+        {
+            "username" : "user2", 
+            "token" : "7977872"
+        }, 
+        {
+            "username" : "user2", 
+            "token" : "8718683"
+        }, 
+        {
+            "username" : "user2", 
+            "token" : "3788090"
+        }, 
+        {
+            "username" : "user2", 
+            "token" : "4311264"
+        }, 
+        {
+            "username" : "user2", 
+            "token" : "5555241"
+        }, 
+        {
+            "username" : "user5", 
+            "token" : "4079423"
+        }, 
+        {
+            "username" : "user2", 
+            "token" : "0174306"
+        }
+    ], 
     "products" : [
         {
             "productName" : "Black Berry Phone", 
             "productID" : 1.0, 
             "ProductDescription" : "flip phone", 
             "dateCreated" : Timestamp(0, 0), 
-            "winner" : [
-                "N/A"
-            ], 
             "productImage" : "phone", 
-            "size" : false
+            "size" : false, 
+            "quantity" : NumberInt(10)
         }, 
         {
             "productName" : "shirt", 
             "productID" : 2.0, 
             "ProductDescription" : "select a size", 
             "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "winner" : [
-                "N/A"
-            ], 
+            "quantity" : NumberInt(20), 
             "productImage" : "shirt", 
             "size" : [
                 "XL", 
@@ -36,6 +74,176 @@
     "entries" : [
         {
             "user" : "user1", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user5", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
+            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
+            "size" : [
+                {
+                    "productID" : 2.0, 
+                    "size" : "Large"
+                }
+            ]
+        }, 
+        {
+            "user" : "user2", 
             "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
             "size" : [
                 {
