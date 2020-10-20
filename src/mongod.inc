@@ -26,7 +26,7 @@ class Mongod
     return $client;
   }
 
-//insert new user NEEDS SANITAZIATION, PASSWORD HASH, AND MORE...
+//insert new user NEEDS SANITAZIATION, AND MORE...
   function insertNewUser($user, $client)
   {
     //set which collection to instert to
@@ -36,7 +36,7 @@ $age = date_diff(date_create($_POST['date']), date_create('now'), True)->y;
 $date=date_create('now');
 $user  = array(
       "username"    => $_POST['uname'],
-      "password"    => $_POST['psw'],
+      "password"    => password_hash($_POST['psw'], PASSWORD_DEFAULT),
       "email"       => $_POST['email'],
       "firstName"   => $_POST['fname'],
       "lastName"    => $_POST['lname'],
