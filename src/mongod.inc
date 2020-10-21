@@ -83,7 +83,7 @@ foreach ($fetchAll as $doc) {
     "size" => $product["size"], 
     "productName" => $product["productName"]);
     
-    array_push($returnArray, array($rafflyFetch));
+    array_push($returnArray, $rafflyFetch);
 }
 echo json_encode($returnArray);
 }
