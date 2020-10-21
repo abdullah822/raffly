@@ -44,6 +44,8 @@ if ($result['username'] == $username)
         echo "User authenticated";
         session_start();
         $_SESSION["username"] = $username;
+        header('Location: https://rafflyraffles.com/shop.html');
+        exit();
 
     }
     else
