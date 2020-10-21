@@ -10,7 +10,7 @@ class Mongod
   function connect()
   {
    
-
+   global $mongoURL;
     try
     {
         $client = new Mongo($mongoURL);
