@@ -26,11 +26,11 @@ $collection = $client
 if (filter_var($username, FILTER_VALIDATE_EMAIL))
 {
 
-    $result = $collection->findOne(['email' => $username], ['password' => $returnedPassword]);
+    $result = $collection->findOne(['email' => $username]);
 }
 else
 {
-    $result = $collection->findOne(['username' => $username], ['password' => $returnedPassword]);
+    $result = $collection->findOne(['username' => $username]);
 
 }
 //Logic to check the username and the password. Denies entry if it fails, and starts a session if it succeeds
