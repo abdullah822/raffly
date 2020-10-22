@@ -9,8 +9,9 @@ class Mongod
   //initiate mongodb connection
   function connect()
   {
-   
-   global $mongoURL;
+
+    global $mongoURL;
+
     try
     {
         $client = new Mongo($mongoURL);
@@ -26,30 +27,37 @@ class Mongod
   function insertNewUser($user, $client)
   {
     //set which collection to instert to
-    $collection = $client->Raffly->Users;
+      $collection = $client->Raffly->Users;
 
-$age = date_diff(date_create($_POST['date']), date_create('now'), True)->y;
-$date=date_create('now');
-$user  = array(
-      "username"    => $_POST['uname'],
-      "password"    => password_hash($_POST['psw'], PASSWORD_DEFAULT),
-      "email"       => $_POST['email'],
-      "firstName"   => $_POST['fname'],
-      "lastName"    => $_POST['lname'],
-      "phone"       => $_POST['phone'],
-      "zip"         => $_POST['zip'],
-      "state"       => $_POST['state'],
-      "ip"          => $_POST['ip'],
-      "creditCard"  => $_POST['card'],
-      "dateCreated" => $date,
-      "birthday"    => $_POST['date'],
-      "age"         => $age
-  );
+      $exists = $collection->count(array("username" => $_POST['uname']));
 
+      if(!$exists)
+      {
+          $age   = date_diff(date_create($_POST['date']), date_create('now'), True)->y;
+          $date  = date_create('now');
+          $user  = array(
+            "username"    => $_POST['uname'],
+            "password"    => password_hash($_POST['psw'], PASSWORD_DEFAULT),
+            "email"       => $_POST['email'],
+            "firstName"   => $_POST['fname'],
+            "lastName"    => $_POST['lname'],
+            "phone"       => $_POST['phone'],
+            "zip"         => $_POST['zip'],
+            "state"       => $_POST['state'],
+            "ip"          => $_POST['ip'],
+            "creditCard"  => $_POST['card'],
+            "dateCreated" => $date,
+            "birthday"    => $_POST['date'],
+            "age"         => $age
+          );
 
-
-    //insert data
-    $result = $collection->insertOne($user);
+          //insert data
+          $result = $collection->insertOne($user);
+        }
+        else
+        {
+          echo "user exists";
+        }
   }
 function getRaffles($client){
 $collection = $client->Raffly->Raffle;
@@ -62,7 +70,7 @@ if (!is_null($limit) and $limit < 0 and is_null($skip)) {
     $fetchAll = $collection->find(array("complete" => false),[limit=>$limit]);
 }elseif (!is_null($limit) and $limit < 0 and !is_null($skip) and $skip>0){
 $fetchAll = $collection->find(array("complete" => false),[limit=>$limit, skip=>$skip]);
-} 
+}
 else {
     $fetchAll = $collection->find(array("complete" => false));
 }
@@ -71,20 +79,20 @@ $returnArray = [];
 foreach ($fetchAll as $doc) {
     $product = $doc["products"][0];
     $rafflyFetch = array(
-    
-    "title" => $doc["title"], 
-    "description" => $doc["description"], 
-    "startTime" => $doc["startTime"], 
-    "endTime" => $doc["endTime"], 
-    "id" => $doc["_id"], 
-    "company" => $doc["company"], 
-    "productImage" => $product["productImage"], 
-    "quantity" => $product["quantity"], 
+
+    "title" => $doc["title"],
+    "description" => $doc["description"],
+    "startTime" => $doc["startTime"],
+    "endTime" => $doc["endTime"],
+    "id" => $doc["_id"],
+    "company" => $doc["company"],
+    "productImage" => $product["productImage"],
+    "quantity" => $product["quantity"],
     "size" => $product["size"],
     "format" => $product["format"],
     "unit_cost" =>$product["unit_cost"],
     "productName" => $product["productName"]);
-    
+
     array_push($returnArray, $rafflyFetch);
 }
 echo json_encode($returnArray);
