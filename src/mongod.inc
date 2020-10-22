@@ -80,12 +80,42 @@ foreach ($fetchAll as $doc) {
     "company" => $doc["company"], 
     "productImage" => $product["productImage"], 
     "quantity" => $product["quantity"], 
-    "size" => $product["size"], 
+    "size" => $product["size"],
+    "format" => $product["format"],
+    "unit_cost" =>$product["unit_cost"],
     "productName" => $product["productName"]);
     
     array_push($returnArray, $rafflyFetch);
 }
 echo json_encode($returnArray);
+}
+
+function createRaffle($client){
+$dataToInsert=array(
+"title"=>$_POST['title'],
+"description"=>$_POST['description'],
+"company"=>$_POST['company'],
+"startTime"=>$_POST['startTime'],
+"endTime"=>$_POST['endTime'],
+"winner"=>array(),
+"entries"=>array(),
+"complete"=>false,
+"products"=>array(array(
+"dateCreated"=>date_create('now'),
+"quantity"=>$_POST['quantity'],
+"productName"=>$_POST['productTitle'],
+"ProductDescription"=>$_POST['productDescription'],
+"unit_cost"=>$_POST['unitCost'],
+"format"=>$_POST['format'],
+"productImage"=>$_POST['image'],
+"size"=>$_POST['size']
+))
+);
+
+
+$collection = $client->Raffly->Raffle;
+
+$collection->insertOne($dataToInsert);
 }
 }
 ?>
