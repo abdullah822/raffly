@@ -1,74 +1,64 @@
 { 
-    "_id" : ObjectId("5f84cfbc4a9e73506bbc75b1"), 
-    "title" : "Blackberry Raffle", 
+    "_id" : ObjectId(), 
+    "title" : "PS5 Raffle", 
     "description" : "Enter to win big!", 
-    "company" : "Onward Mobility", 
+    "company" : "Sony", 
     "startTime" : Timestamp(1602539453, 1), 
     "endTime" : Timestamp(1602539453, 2), 
     "complete" : false, 
     "winner" : [
         {
-            "username" : "user2", 
-            "token" : "9696406"
+            "username" : "user1", 
+            "token" : "509047"
         }, 
         {
             "username" : "user2", 
-            "token" : "1991578"
+            "token" : "998262"
         }, 
         {
             "username" : "user2", 
-            "token" : "3682554"
+            "token" : "379963"
         }, 
         {
             "username" : "user2", 
-            "token" : "7977872"
+            "token" : "270015"
         }, 
         {
             "username" : "user2", 
-            "token" : "8718683"
+            "token" : "842023"
         }, 
         {
             "username" : "user2", 
-            "token" : "3788090"
+            "token" : "306521"
         }, 
         {
             "username" : "user2", 
-            "token" : "4311264"
+            "token" : "143880"
         }, 
         {
             "username" : "user2", 
-            "token" : "5555241"
-        }, 
-        {
-            "username" : "user5", 
-            "token" : "4079423"
+            "token" : "603227"
         }, 
         {
             "username" : "user2", 
-            "token" : "0174306"
+            "token" : "215276"
+        }, 
+        {
+            "username" : "user2", 
+            "token" : "907610"
         }
     ], 
     "products" : [
         {
-            "productName" : "Black Berry Phone", 
-            "productID" : 1.0, 
-            "ProductDescription" : "flip phone", 
-            "dateCreated" : Timestamp(0, 0), 
-            "productImage" : "phone", 
-            "size" : false, 
-            "quantity" : NumberInt(10)
-        }, 
-        {
-            "productName" : "shirt", 
+            "productName" : "PS5", 
             "productID" : 2.0, 
-            "ProductDescription" : "select a size", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "quantity" : NumberInt(20), 
-            "productImage" : "shirt", 
-            "size" : [
-                "XL", 
-                "Large"
-            ]
+            "ProductDescription" : "PS5", 
+            "dateCreated" : Timestamp(0, 0), 
+            "productImage" : "http://rafflyraffles.com/assets/images/image.jpg", 
+            "size" : false,
+            "format": "Digital",
+            "unit_cost": "$400.00",
+            "quantity" : NumberInt(500)
         }
     ], 
     "entries" : [
