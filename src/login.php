@@ -10,9 +10,6 @@ error_reporting(-1);
 $username = $_POST["uname"];
 $password = $_POST["pswd"];
 
-//initiates the database connection
-$mongoURL = "mongodb://" . $dbUsername . ":" . $dbPassword . "@" . $host . ":" . $port . "/?authSource=admin";
-
 try
 {
     $client = new Mongo($mongoURL);
