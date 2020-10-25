@@ -3,5 +3,5 @@ include "mongod.inc";
 
 
 $db = new Mongod;
-$client = $db->connect($_POST);
+$client = $db->connect();
 $db->insertNewUser($_POST, $client);
