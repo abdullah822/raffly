@@ -1,10 +1,10 @@
 { 
-    "_id" : ObjectId(), 
+    "_id" : ObjectId("5f90d1f066973c47899b3383"), 
     "title" : "PS5 Raffle", 
     "description" : "Enter to win big!", 
     "company" : "Sony", 
     "startTime" : Timestamp(1602539453, 1), 
-    "endTime" : Timestamp(1602539453, 2), 
+    "endTime" : Timestamp(1607809853, 2), 
     "complete" : false, 
     "winner" : [
         {
@@ -51,13 +51,12 @@
     "products" : [
         {
             "productName" : "PS5", 
-            "productID" : 2.0, 
             "ProductDescription" : "PS5", 
             "dateCreated" : Timestamp(0, 0), 
-            "productImage" : "http://rafflyraffles.com/assets/images/image.jpg", 
-            "size" : false,
-            "format": "Digital",
-            "unit_cost": "$400.00",
+            "productImage" : "http://rafflyraffles.com/assets/images/image1.jpg", 
+            "size" : false, 
+            "format" : "Digital", 
+            "unit_cost" : "$400.00", 
             "quantity" : NumberInt(500)
         }
     ], 
@@ -65,182 +64,7 @@
         {
             "user" : "user1", 
             "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user5", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
-        }, 
-        {
-            "user" : "user2", 
-            "dateCreated" : ISODate("2020-12-10T07:35:00.000+0000"), 
-            "size" : [
-                {
-                    "productID" : 2.0, 
-                    "size" : "Large"
-                }
-            ]
+            "size" : "Large"
         }
     ]
 }
