@@ -23,6 +23,28 @@ class Mongod
     return $client;
   }
 
+  //assign user to raffle NEEDS UPDATE T0 CHECK
+  //IF USER HAS ALREADY ENTERED RAFFLE
+  function enterRaffle($raffleID, $user, $client)
+  {
+
+    $collection = $client->Raffly->Raffle;
+    $date       = date_create();
+
+    $entry          = array(
+      "user"        => $user,
+      "dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)),
+      "size"        => "smol"
+    );
+
+  $updateResult     = $collection->updateOne(
+                                ['_id' => new MongoDB\BSON\ObjectID($raffleID)],
+                                ['$push' => ['entries' => $entry]]);
+
+          //  printf("Matched %d document(s)\n", $updateResult->getMatchedCount());
+            //printf("Modified %d document(s)\n", $updateResult->getModifiedCount());
+  }
+
 //insert new user NEEDS SANITAZIATION, AND MORE...
   function insertNewUser($user, $client)
   {
@@ -46,7 +68,7 @@ class Mongod
             "state"       => $_POST['state'],
             "ip"          => $_POST['ip'],
             "creditCard"  => $_POST['card'],
-            "dateCreated" => $date,
+            "dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)),
             "birthday"    => $_POST['date'],
             "age"         => $age
           );
@@ -99,6 +121,7 @@ echo json_encode($returnArray);
 }
 
 function createRaffle($client){
+$date = date_create();
 $dataToInsert=array(
 "title"=>$_POST['title'],
 "description"=>$_POST['description'],
@@ -109,7 +132,7 @@ $dataToInsert=array(
 "entries"=>array(),
 "complete"=>false,
 "products"=>array(array(
-"dateCreated"=>date_create('now'),
+"dateCreated"=>new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)),
 "quantity"=>$_POST['quantity'],
 "productName"=>$_POST['productTitle'],
 "ProductDescription"=>$_POST['productDescription'],
@@ -126,4 +149,6 @@ $collection = $client->Raffly->Raffle;
 $collection->insertOne($dataToInsert);
 }
 }
+
+
 ?>
