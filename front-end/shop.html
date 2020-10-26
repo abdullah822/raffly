@@ -85,7 +85,8 @@
                 <div class="title pb-5 col-12">
                     <h2 class="align-left pb-3 mbr-fonts-style display-2">Current Raffles</h2>
                     <h3 class="mbr-section-subtitle mbr-light mbr-fonts-style display-7">
-                        You must be a member to enter raffles.</h3>
+                        You must be a member to enter raffles. <a href="register.html" style="color:#f09cc3;">&nbspSign
+                            up here! </a> </h3>
                 </div>
                 <div id="result"></div>
 
@@ -207,10 +208,11 @@
                 count = 0;
                 finish = [];
                 data.forEach((raffle) => {
-                    const { title, description, startTime, endTime, company, productImage, quantity, size, format, unit_cost, productName, } = raffle
-                    start = new Date(JSON.stringify(startTime).slice(19, 29) * 1000);//confused
-                    end = new Date(JSON.stringify(endTime).slice(19, 29) * 1000);//not sure what happened
+                    const { id, title, description, startTime, endTime, company, productImage, quantity, size, format, unit_cost, productName, } = raffle
+                    start = new Date(startTime.$timestamp.t * 1000);//confused
+                    end = new Date(endTime.$timestamp.t * 1000);//not sure what happened
                     expire = '';
+                    raffle_id = id.$oid;
                     count++;
                     result +=
                         `<div class="card col-12 col-md-6 p-3 col-lg-4" style="display:inline-block; color:white;">
@@ -226,7 +228,11 @@
                                             <p class="mbr-text mbr-fonts-style display-7" style="padding:4px;">${description}</p>
                                             <!--Btn-->
                                             <div style="text-align:center;">
+
+                                            <form action="" method="POST"><input type="hidden" name="raffle_id" value="${raffle_id}">
                                             <button type="submit" class="btn btn-white-outline" value="${unit_cost}">${unit_cost}</button>
+                                            </form>
+
                                                
                                                 
                                             </div>
