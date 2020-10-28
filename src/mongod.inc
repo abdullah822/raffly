@@ -34,14 +34,14 @@ class Mongod
     $entry          = array(
       "user"        => $user,
       "dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)),
-      "size"        => "smol"
+      "size"        => $size
     );
 
   $updateResult     = $collection->updateOne(
                                 ['_id' => new MongoDB\BSON\ObjectID($raffleID)],
                                 ['$push' => ['entries' => $entry]]);
 
-          //  printf("Matched %d document(s)\n", $updateResult->getMatchedCount());
+            //printf("Matched %d document(s)\n", $updateResult->getMatchedCount());
             //printf("Modified %d document(s)\n", $updateResult->getModifiedCount());
   }
 
