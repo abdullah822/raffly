@@ -2,15 +2,11 @@
 <html>
 
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <link rel="shortcut icon" href="assets/images/favicon-128x97.png" type="image/x-icon">
     <meta name="description" content="The right way to raffle!">
-
-
     <title>Raffly Raffles | Raffles</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
@@ -22,27 +18,18 @@
     <link rel="stylesheet" href="assets/theme/css/style.css">
     <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css">
     <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
-
-
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-180949359-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'UA-180949359-1');
     </script>
-
-
 </head>
 
 <body>
-
     <section class="menu cid-scuWPtqOP4" once="menu" id="menu2-e">
-
-
-
         <nav
             class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm bg-color transparent">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
@@ -57,24 +44,17 @@
             </button>
             <div class="menu-logo">
                 <div class="navbar-brand">
-
-
                 </div>
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                 <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-primary display-4"
-                        href="index.html">
-
-                        Home</a> <a class="btn btn-sm btn-primary display-4" href="shop.html">Raffles</a></div>
+                        href="index.html">Home</a> <a class="btn btn-sm btn-primary display-4"
+                        href="shop.html">Raffles</a></div>
             </div>
         </nav>
     </section>
-
     <section class="services1 cid-scFU5gOuTg mbr-parallax-background" id="services1-f">
-        <!---->
-
-        <!---->
         <!--Overlay-->
         <div class="mbr-overlay" style="opacity: 0.7; background-color: rgb(7, 39, 76);">
         </div>
@@ -88,38 +68,18 @@
                         You must be a member to enter raffles. <a href="register.html" style="color:#f09cc3;">&nbspSign
                             up here! </a> </h3>
                 </div>
-                <div id="result"></div>
-
-
-
-
-                <!-- <span class="gdpr-block">
-                    <label>
-                        <span class="textGDPR display-7" style="color: #a7a7a7"><input type="checkbox" name="gdpr"
-                                id="gdpr-input" required="">By continuing you agree to our <a
-                                style="color: #149dcc; text-decoration: underline;" href="terms.html">Terms of
-                                Service</a> and <a style="color: #149dcc; text-decoration: underline;"
-                                href="policy.html">Privacy Policy</a>.</span>
-                    </label>
-                </span> -->
+                <div id="result2"></div>
+                <div id="result">
+                    <!-- This is where the magic happens! -->
+                </div>
             </div>
         </div>
     </section>
-
     <section once="footers" class="cid-sbl3qdWjiH" id="footer7-d">
-
-
-
-
-
         <div class="container">
             <div class="media-container-row align-center mbr-white">
                 <div class="row row-links">
                     <ul class="foot-menu">
-
-
-
-
 
                         <li class="foot-menu-item mbr-fonts-style display-7">
                             <a class="text-white mbr-bold" href="#" target="_blank">About Us</a>
@@ -132,12 +92,6 @@
                 </div>
                 <div class="row social-row">
                     <div class="social-list align-right pb-2">
-
-
-
-
-
-
                         <div class="soc-item">
                             <a href="https://twitter.com" target="_blank">
                                 <span class="mbr-iconfont mbr-iconfont-social socicon-twitter socicon"></span>
@@ -178,8 +132,6 @@
             </div>
         </div>
     </section>
-
-
     <script src="assets/web/assets/jquery/jquery.min.js"></script>
     <script src="assets/popper/popper.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
@@ -192,30 +144,30 @@
     <script src="assets/dropdown/js/navbar-dropdown.js"></script>
     <script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
     <script src="assets/theme/js/script.js"></script>
-
     <script>
-        fetch('https://rafflyraffles.com/middle/php/getRaffles.php', {
+        fetch('middle/php/getRaffles.php', {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
         })
-
             .then((res) => { return res.json() })
             .then((data) => {
-                let result = `<div id="countdown"></div>`;
                 count = 0;
+                let result = `<div></div>`;
                 finish = [];
                 data.forEach((raffle) => {
                     const { id, title, description, startTime, endTime, company, productImage, quantity, size, format, unit_cost, productName, } = raffle
-                    start = new Date(startTime.$timestamp.t * 1000);//confused
-                    end = new Date(endTime.$timestamp.t * 1000);//not sure what happened
+                    console.log("size vairable: " + size);
+                    start = new Date(startTime.$timestamp.t * 1000);
+                    end = new Date(endTime.$timestamp.t * 1000);
                     expire = '';
                     raffle_id = id.$oid;
                     count++;
                     result +=
                         `<div class="card col-12 col-md-6 p-3 col-lg-4" style="display:inline-block; color:white;">
+                         <div id="prod-${count}"></div>
                         <span><h5 style="color:white;"> ${title} </h5></span>
                        
                          <div class="" >
@@ -228,13 +180,18 @@
                                             <p class="mbr-text mbr-fonts-style display-7" style="padding:4px;">${description}</p>
                                             <!--Btn-->
                                             <div style="text-align:center;">
-
-                                            <form action="" method="POST"><input type="hidden" name="raffle_id" value="${raffle_id}">
-                                            <button type="submit" class="btn btn-white-outline" value="${unit_cost}">${unit_cost}</button>
-                                            </form>
-
-                                               
-                                                
+                                            <form name="form-${count}" id="form-${count}" style="display:none;">
+                                            <input type="hidden" name="raffle_id" value="${raffle_id}">`;
+                    if (size !== false) {
+                        result +=
+                            `<label for="size">Size:</label>
+                             <select name="size" id="size-${count}">`;
+                        for (var k = 0; k < size.length; k++) { result += `<option value="${size[k]}">${size[k]}</option>`; }
+                    }
+                    result += `</select>
+                                <button onclick=" enterRaffle(event,${count});" class="btn btn-white-outline" style="padding:0.5rem 2rem;">Enter</button>&nbsp&nbsp&nbsp
+                                            </form> 
+                                            <button type="button" class="btn btn-white-outline" onclick="getPopup(${count})">${unit_cost}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -255,13 +212,38 @@
                     for (var i = 0; i < finish.length; i++) {
                         document.getElementById("countdown-" + (i + 1)).innerHTML = expire;
                     }
-
                 }, 1000);
             })
             .catch(err => console.log('Request Failed', err)); // Catch errors
-
     </script>
+    <script>
+        function getPopup(c) {
+            for (var i = 0; i < finish.length; i++) {
+                document.getElementById("form-" + c).style = 'display:inline-block;';
+            }
+        }
+    </script>
+    <script>
+        function enterRaffle(event, c) {
+            event.preventDefault();
+            let myForm = document.getElementById("form-" + c);
+            const formData = new FormData(myForm);
+            fetch('middle/php/enterRaffles.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then((res) => res.text())
+                .then((text) => {
+                    if (text !== false) {
+                        myForm.style = "color: rgb( 255, 000, 000 );";
+                        myForm.innerHTML = "Sorry, no raffles open yet.";
+                    }
+                    else { myForm.innerHTML = "Oops, something went wrong"; }
+                })
+            window.setTimeout(function () { myForm.innerHTML = ''; }, 3000);
 
+        }
+    </script>
     <input name="cookieData" type="hidden" data-cookie-customDialogSelector='null' data-cookie-colorText='#424a4d'
         data-cookie-colorBg='rgba(234, 239, 241, 0.99)' data-cookie-textButton='Agree' data-cookie-colorButton=''
         data-cookie-colorLink='#424a4d' data-cookie-underlineLink='true'
