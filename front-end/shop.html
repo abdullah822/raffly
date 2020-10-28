@@ -33,16 +33,10 @@
 
         gtag('config', 'UA-180949359-1');
     </script>
-
-
 </head>
 
 <body>
-
     <section class="menu cid-scuWPtqOP4" once="menu" id="menu2-e">
-
-
-
         <nav
             class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm bg-color transparent">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
@@ -57,8 +51,6 @@
             </button>
             <div class="menu-logo">
                 <div class="navbar-brand">
-
-
                 </div>
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -72,9 +64,6 @@
     </section>
 
     <section class="services1 cid-scFU5gOuTg mbr-parallax-background" id="services1-f">
-        <!---->
-
-        <!---->
         <!--Overlay-->
         <div class="mbr-overlay" style="opacity: 0.7; background-color: rgb(7, 39, 76);">
         </div>
@@ -85,40 +74,21 @@
                 <div class="title pb-5 col-12">
                     <h2 class="align-left pb-3 mbr-fonts-style display-2">Current Raffles</h2>
                     <h3 class="mbr-section-subtitle mbr-light mbr-fonts-style display-7">
-                        You must be a member to enter raffles.</h3>
+                        Welcome! </h3>
                 </div>
-                <div id="result"></div>
-
-
-
-
-                <!-- <span class="gdpr-block">
-                    <label>
-                        <span class="textGDPR display-7" style="color: #a7a7a7"><input type="checkbox" name="gdpr"
-                                id="gdpr-input" required="">By continuing you agree to our <a
-                                style="color: #149dcc; text-decoration: underline;" href="terms.html">Terms of
-                                Service</a> and <a style="color: #149dcc; text-decoration: underline;"
-                                href="policy.html">Privacy Policy</a>.</span>
-                    </label>
-                </span> -->
+                <div id="result2"></div>
+                <div id="result">
+                    <!-- This is where the magic happens! -->
+                </div>
             </div>
         </div>
     </section>
 
     <section once="footers" class="cid-sbl3qdWjiH" id="footer7-d">
-
-
-
-
-
         <div class="container">
             <div class="media-container-row align-center mbr-white">
                 <div class="row row-links">
                     <ul class="foot-menu">
-
-
-
-
 
                         <li class="foot-menu-item mbr-fonts-style display-7">
                             <a class="text-white mbr-bold" href="#" target="_blank">About Us</a>
@@ -131,12 +101,6 @@
                 </div>
                 <div class="row social-row">
                     <div class="social-list align-right pb-2">
-
-
-
-
-
-
                         <div class="soc-item">
                             <a href="https://twitter.com" target="_blank">
                                 <span class="mbr-iconfont mbr-iconfont-social socicon-twitter socicon"></span>
@@ -177,8 +141,6 @@
             </div>
         </div>
     </section>
-
-
     <script src="assets/web/assets/jquery/jquery.min.js"></script>
     <script src="assets/popper/popper.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
@@ -191,69 +153,38 @@
     <script src="assets/dropdown/js/navbar-dropdown.js"></script>
     <script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>
     <script src="assets/theme/js/script.js"></script>
+    <script src="assets/js/shop.js"></script>
 
     <script>
-        fetch('https://rafflyraffles.com/middle/php/getRaffles.php', {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+        function getPopup(c) {
+
+            for (var i = 0; i < finish.length; i++) {
+                document.getElementById("form-" + c).style = 'display:inline-block;';
             }
-        })
+        }
 
-            .then((res) => { return res.json() })
-            .then((data) => {
-                let result = `<div id="countdown"></div>`;
-                count = 0;
-                finish = [];
-                data.forEach((raffle) => {
-                    const { title, description, startTime, endTime, company, productImage, quantity, size, format, unit_cost, productName, } = raffle
-                    start = new Date(JSON.stringify(startTime).slice(19, 29) * 1000);//confused
-                    end = new Date(JSON.stringify(endTime).slice(19, 29) * 1000);//not sure what happened
-                    expire = '';
-                    count++;
-                    result +=
-                        `<div class="card col-12 col-md-6 p-3 col-lg-4" style="display:inline-block; color:white;">
-                        <span><h5 style="color:white;"> ${title} </h5></span>
-                       
-                         <div class="" >
-                                    <div class="card-wrapper">
-                                        <div class="card-img">
-                                            <img src="${productImage}" alt="" title="">
-                                        Expires:&nbsp<span class="" name="countdown[]" id="countdown-${count}" ></span>
-                                        </div>
-                                        <div class="card-box" style="padding:4px;">
-                                            <p class="mbr-text mbr-fonts-style display-7" style="padding:4px;">${description}</p>
-                                            <!--Btn-->
-                                            <div style="text-align:center;">
-                                            <button type="submit" class="btn btn-white-outline" value="${unit_cost}">${unit_cost}</button>
-                                               
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                      </div>`;
-                    finish.push(end);
-                    document.getElementById('result').innerHTML = result;
-                });
-                setInterval(function () {
-                    var now = new Date();
-                    var left = new Date(end - now);
-                    var months = left.getMonth() + 1;
-                    var days = left.getDate().toString();
-                    var hours = left.getHours().toString();
-                    var minutes = left.getMinutes().toString();
-                    var seconds = left.getSeconds().toString();
-                    expire = months + "M " + days + "d " + hours + "h " + minutes + "m " + seconds + "s";
-                    for (var i = 0; i < finish.length; i++) {
-                        document.getElementById("countdown-" + (i + 1)).innerHTML = expire;
-                    }
+    </script>
+    <script>
+        function enterRaffle(event, c) {
+            event.preventDefault();
 
-                }, 1000);
+            let myForm = document.getElementById("form-" + c);
+            const formData = new FormData(myForm);
+
+            fetch('middle/php/enterRaffles.php', {
+                method: 'POST',
+                body: formData
             })
-            .catch(err => console.log('Request Failed', err)); // Catch errors
-
+                .then((res) => res.text())
+                .then((text) => {
+                    if (text !== false) {
+                        myForm.style = "color: rgb( 255, 000, 000 );";
+                        myForm.innerHTML = "Sorry, no raffles open yet.";
+                    }
+                    else { myForm.innerHTML = "Oops, something went wrong"; }
+                })
+            window.setTimeout(function () { myForm.innerHTML = ''; }, 3000);
+        }
     </script>
 
     <input name="cookieData" type="hidden" data-cookie-customDialogSelector='null' data-cookie-colorText='#424a4d'
