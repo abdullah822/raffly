@@ -75,6 +75,9 @@ class Mongod
 
           //insert data
           $result = $collection->insertOne($user);
+          session_start();
+          $_SESSION["username"] = $_POST['uname'];
+          header('Location: https://rafflyraffles.com/success');
         }
         else
         {
