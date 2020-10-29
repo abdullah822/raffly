@@ -64,7 +64,7 @@ class Mongod {
              "token" => $token, 
              "verified" => false);
             $sendRegistrationMail = new rafflyMail;
-            $urlToken = "https://rafflyraffles.com/middle/verifyEmail.php?t=" . $token;
+            $urlToken = "https://rafflyraffles.com/middle/php/verifyEmail.php?t=" . $token;
             $sendRegistrationMail->setEmailUsername($emailUsername);
             $sendRegistrationMail->setEmailPassword($emailPassword);
             $sendRegistrationMail->sendMailRaffly($_POST['uname'], $_POST['email'], $urlToken);
@@ -148,11 +148,13 @@ class Mongod {
         $id = $fetch["_id"];
         if ($tokenCheck === $fetch["token"]) {
             $updateResult = $collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($id) ], ['$set' => ['verified' => true, 'token' => '']]);
-            echo "verified";
             header("https://rafflyraffles.com/login");
+            
+            exit();
         } else {
-            echo "invalid token";
             header("https://rafflyraffles.com/");
+           
+            exit();
         }
     }
 }
