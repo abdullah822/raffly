@@ -48,7 +48,21 @@ class Mongod {
         if (!$exists) {
             $age = date_diff(date_create($_POST['date']), date_create('now'), True)->y;
             $date = date_create('now');
-            $user = array("username" => $_POST['uname'], "password" => password_hash($_POST['psw'], PASSWORD_DEFAULT), "email" => $_POST['email'], "firstName" => $_POST['fname'], "lastName" => $_POST['lname'], "phone" => $_POST['phone'], "zip" => $_POST['zip'], "state" => $_POST['state'], "ip" => $_POST['ip'], "creditCard" => $_POST['card'], "dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)), "birthday" => $_POST['date'], "age" => $age, "token" => $token, "verified" => false);
+            $user = array("username" => $_POST['uname'], 
+            "password" => password_hash($_POST['psw'], PASSWORD_DEFAULT), 
+            "email" => $_POST['email'], 
+            "firstName" => $_POST['fname'], 
+            "lastName" => $_POST['lname'], 
+            "phone" => $_POST['phone'], 
+            "zip" => $_POST['zip'], 
+            "state" => $_POST['state'], 
+            "ip" => $_POST['ip'], 
+            "creditCard" => $_POST['card'], 
+            "dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)), 
+            "birthday" => $_POST['date'], 
+            "age" => $age,
+             "token" => $token, 
+             "verified" => false);
             $sendRegistrationMail = new rafflyMail;
             $urlToken = "https://rafflyraffles.com/middle/verifyEmail.php?t=" . $token;
             $sendRegistrationMail->setEmailUsername($emailUsername);
@@ -80,19 +94,52 @@ class Mongod {
         }
         $returnArray = [];
         //loops for all raffles and indexes data to be used for frontend
-        foreach ($fetchAll as $doc) {
-            $product = $doc["products"][0];
-            $rafflyFetch = array("title" => $doc["title"], "description" => $doc["description"], "startTime" => $doc["startTime"], "endTime" => $doc["endTime"], "id" => $doc["_id"], "company" => $doc["company"], "productImage" => $product["productImage"], "quantity" => $product["quantity"], "size" => $product["size"], "format" => $product["format"], "unit_cost" => $product["unit_cost"], "productName" => $product["productName"]);
-            array_push($returnArray, $rafflyFetch);
-        }
+      foreach ($fetchAll as $doc) {
+    $product = $doc["products"][0];
+    $rafflyFetch = array(
+
+    "title" => $doc["title"],
+    "description" => $doc["description"],
+    "startTime" => $doc["startTime"],
+    "endTime" => $doc["endTime"],
+    "id" => $doc["_id"],
+    "company" => $doc["company"],
+    "productImage" => $product["productImage"],
+    "quantity" => $product["quantity"],
+    "size" => $product["size"],
+    "format" => $product["format"],
+    "unit_cost" =>$product["unit_cost"],
+    "productName" => $product["productName"]);
+
+    array_push($returnArray, $rafflyFetch);
+}
         echo json_encode($returnArray);
     }
+    
     function createRaffle($client) {
         $date = date_create();
-        $dataToInsert = array("title" => $_POST['title'], "description" => $_POST['description'], "company" => $_POST['company'], "startTime" => $_POST['startTime'], "endTime" => $_POST['endTime'], "winner" => array(), "entries" => array(), "complete" => false, "products" => array(array("dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)), "quantity" => $_POST['quantity'], "productName" => $_POST['productTitle'], "ProductDescription" => $_POST['productDescription'], "unit_cost" => $_POST['unitCost'], "format" => $_POST['format'], "productImage" => $_POST['image'], "size" => $_POST['size'])));
-        $collection = $client->Raffly->Raffle;
-        $collection->insertOne($dataToInsert);
-    }
+       $dataToInsert=array(
+"title"=>$_POST['title'],
+"description"=>$_POST['description'],
+"company"=>$_POST['company'],
+"startTime"=>$_POST['startTime'],
+"endTime"=>$_POST['endTime'],
+"winner"=>array(),
+"entries"=>array(),
+"complete"=>false,
+"products"=>array(array(
+"dateCreated"=>new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)),
+"quantity"=>$_POST['quantity'],
+"productName"=>$_POST['productTitle'],
+"ProductDescription"=>$_POST['productDescription'],
+"unit_cost"=>$_POST['unitCost'],
+"format"=>$_POST['format'],
+"productImage"=>$_POST['image'],
+"size"=>$_POST['size']
+))
+);
+}
+    
     //php that checks the link and verifies the proper user
     function verifyEmail($client) {
         $collection = $client->Raffly->Users;
@@ -102,8 +149,10 @@ class Mongod {
         if ($tokenCheck === $fetch["token"]) {
             $updateResult = $collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($id) ], ['$set' => ['verified' => true, 'token' => '']]);
             echo "verified";
+            header("https://rafflyraffles.com/login");
         } else {
             echo "invalid token";
+            header("https://rafflyraffles.com/");
         }
     }
 }
