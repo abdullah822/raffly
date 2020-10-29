@@ -12,7 +12,7 @@ class rafflyMail {
     function setEmailPassword($passwords) {
         $this->password = $passwords;
     }
-    function sendMailRaffly($name,$address,$url) {
+    function sendMailRaffly($name,$address,$url,$message) {
         //Create a new PHPMailer instance
         $mail = new PHPMailer();
         //Tell PHPMailer to use SMTP
@@ -45,15 +45,6 @@ class rafflyMail {
         $mail->Subject = 'Verify Your Raffly Email';
         //Read an HTML message body from an external file, convert referenced images to embedded,
         //convert HTML into a basic plain-text alternative body
-      
-        
-        $message = "Hello, " . $name . ",<br>
-Your Raffly account is almost ready to be activated! Click the link below to verify your email address:<br>
-" . $url . "<br>
-If you have not submitted this request, it is safe to ignore this message.<br><br>
-
-Sincerely, <br> 
-The Raffly Team";
         $mail->msgHTML($message, __DIR__);
         //Replace the plain text body with one created manually
         $mail->AltBody = 'This is a plain-text message body';
