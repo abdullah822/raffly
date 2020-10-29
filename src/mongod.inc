@@ -67,7 +67,14 @@ class Mongod {
             $urlToken = "https://rafflyraffles.com/middle/php/verifyEmail.php?t=" . $token;
             $sendRegistrationMail->setEmailUsername($emailUsername);
             $sendRegistrationMail->setEmailPassword($emailPassword);
-            $sendRegistrationMail->sendMailRaffly($_POST['uname'], $_POST['email'], $urlToken);
+            $message = "Hello, " . $_POST['uname'] . ",<br>
+Your Raffly account is almost ready to be activated! Click the link below to verify your email address:<br>
+" . $urlToken . "<br>
+If you have not submitted this request, it is safe to ignore this message.<br><br>
+
+Sincerely, <br> 
+The Raffly Team";
+            $sendRegistrationMail->sendMailRaffly($_POST['uname'], $_POST['email'], $urlToken, $message);
             //insert data
             $result = $collection->insertOne($user);
             header('Location: https://rafflyraffles.com/success');
