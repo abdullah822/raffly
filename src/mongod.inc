@@ -125,6 +125,7 @@ The Raffly Team";
     
     function createRaffle($client) {
         $date = date_create();
+        $sizeArray=explode(',', $_POST['size']);
        $dataToInsert=array(
 "title"=>$_POST['title'],
 "description"=>$_POST['description'],
@@ -142,9 +143,14 @@ The Raffly Team";
 "unit_cost"=>$_POST['unitCost'],
 "format"=>$_POST['format'],
 "productImage"=>$_POST['image'],
-"size"=>$_POST['size']
+"size"=>$sizeArray
 ))
 );
+$result=$collection->insertOne($dataToInsert);
+$documentID=$insertResult->getInsertedId();
+$duration=$_POST['endTime']-time();
+$schedule="php /var/www/html/middle/php/raffleWinners.php ".$documentID." | at ". $duration;
+system($schedule);
 }
     
     //php that checks the link and verifies the proper user
@@ -155,11 +161,11 @@ The Raffly Team";
         $id = $fetch["_id"];
         if ($tokenCheck === $fetch["token"]) {
             $updateResult = $collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($id) ], ['$set' => ['verified' => true, 'token' => '']]);
-            header("https://rafflyraffles.com/login");
+            header("Location: https://rafflyraffles.com/login");
             
             exit();
         } else {
-            header("https://rafflyraffles.com/");
+            header("Location:https://rafflyraffles.com/");
            
             exit();
         }
