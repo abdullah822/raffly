@@ -125,13 +125,16 @@ The Raffly Team";
     
     function createRaffle($client) {
         $date = date_create();
-        $sizeArray=explode(',', $_POST['size']);
+        //$sizeArray=explode(',', $_POST['size']);
+        $collection=$client->Raffly->Raffle;
+        $startTime=new  \MongoDB\BSON\UTCDateTime(strtotime($_POST['startTime'])* 1000);
+        $endTime=new  \MongoDB\BSON\UTCDateTime(strtotime($_POST['endTime'])* 1000);
        $dataToInsert=array(
 "title"=>$_POST['title'],
 "description"=>$_POST['description'],
 "company"=>$_POST['company'],
-"startTime"=>$_POST['startTime'],
-"endTime"=>$_POST['endTime'],
+"startTime"=>$startTime,
+"endTime"=>$endTime,
 "winner"=>array(),
 "entries"=>array(),
 "complete"=>false,
@@ -143,14 +146,16 @@ The Raffly Team";
 "unit_cost"=>$_POST['unitCost'],
 "format"=>$_POST['format'],
 "productImage"=>$_POST['image'],
-"size"=>$sizeArray
+"size"=>$_POST['size']
 ))
 );
-$result=$collection->insertOne($dataToInsert);
+$insertResult=$collection->insertOne($dataToInsert);
 $documentID=$insertResult->getInsertedId();
+
 $duration=$_POST['endTime']-time();
 $schedule="php /var/www/html/middle/php/raffleWinners.php ".$documentID." | at ". $duration;
 system($schedule);
+
 }
     
     //php that checks the link and verifies the proper user
