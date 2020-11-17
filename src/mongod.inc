@@ -6,7 +6,7 @@ include 'mail.inc';
 class Mongod {
     //initiate mongodb connection
     function connect() {
-        global $mongoURL;
+      global $mongoURL;
         try {
             $client = new Mongo($mongoURL);
         }
@@ -24,7 +24,7 @@ class Mongod {
         $updateResult = $collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($raffleID) ], ['$push' => ['entries' => $entry]]);
         //  printf("Matched %d document(s)\n", $updateResult->getMatchedCount());
         //printf("Modified %d document(s)\n", $updateResult->getModifiedCount());
-        
+
     }
     //generates alphanumeric tokens
     private function randomString($input, $strength = 16) {
@@ -40,6 +40,7 @@ class Mongod {
     function insertNewUser($user, $client) {
         global $emailUsername;
         global $emailPassword;
+        $reset = false;
         //set which collection to instert to
         $collection = $client->Raffly->Users;
         $exists = $collection->count(array("username" => $_POST['uname']));
@@ -48,20 +49,20 @@ class Mongod {
         if (!$exists) {
             $age = date_diff(date_create($_POST['date']), date_create('now'), True)->y;
             $date = date_create('now');
-            $user = array("username" => $_POST['uname'], 
-            "password" => password_hash($_POST['psw'], PASSWORD_DEFAULT), 
-            "email" => $_POST['email'], 
-            "firstName" => $_POST['fname'], 
-            "lastName" => $_POST['lname'], 
-            "phone" => $_POST['phone'], 
-            "zip" => $_POST['zip'], 
-            "state" => $_POST['state'], 
-            "ip" => $_POST['ip'], 
-            "creditCard" => $_POST['card'], 
-            "dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)), 
-            "birthday" => $_POST['date'], 
+            $user = array("username" => $_POST['uname'],
+            "password" => password_hash($_POST['psw'], PASSWORD_DEFAULT),
+            "email" => $_POST['email'],
+            "firstName" => $_POST['fname'],
+            "lastName" => $_POST['lname'],
+            "phone" => $_POST['phone'],
+            "zip" => $_POST['zip'],
+            "state" => $_POST['state'],
+            "ip" => $_POST['ip'],
+            "creditCard" => $_POST['card'],
+            "dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)),
+            "birthday" => $_POST['date'],
             "age" => $age,
-             "token" => $token, 
+             "token" => $token,
              "verified" => false);
             $sendRegistrationMail = new rafflyMail;
             $urlToken = "https://rafflyraffles.com/middle/php/verifyEmail.php?t=" . $token;
@@ -72,9 +73,9 @@ Your Raffly account is almost ready to be activated! Click the link below to ver
 " . $urlToken . "<br>
 If you have not submitted this request, it is safe to ignore this message.<br><br>
 
-Sincerely, <br> 
+Sincerely, <br>
 The Raffly Team";
-            $sendRegistrationMail->sendMailRaffly($_POST['uname'], $_POST['email'], $message);
+            $sendRegistrationMail->sendMailRaffly($_POST['email'], $message, $reset);
             //insert data
             $result = $collection->insertOne($user);
             header('Location: https://rafflyraffles.com/success');
@@ -122,7 +123,7 @@ The Raffly Team";
 }
         echo json_encode($returnArray);
     }
-    
+
     function createRaffle($client) {
         $date = date_create();
         //$sizeArray=explode(',', $_POST['size']);
@@ -157,7 +158,7 @@ $schedule="php /var/www/html/middle/php/raffleWinners.php ".$documentID." | at "
 system($schedule);
 
 }
-    
+
     //php that checks the link and verifies the proper user
     function verifyEmail($client) {
         $collection = $client->Raffly->Users;
@@ -167,13 +168,33 @@ system($schedule);
         if ($tokenCheck === $fetch["token"]) {
             $updateResult = $collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($id) ], ['$set' => ['verified' => true, 'token' => '']]);
             header("Location: https://rafflyraffles.com/login");
-            
+
             exit();
         } else {
             header("Location:https://rafflyraffles.com/");
-           
+
             exit();
         }
+    }
+
+    function generatePassword($email, $client)
+    {
+      $collection = $client->Raffly->Users;
+      global $emailUsername;
+      global $emailPassword;
+
+      $reset = true;
+      $password = $this->randomString('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 8);
+      $message = "Hello, your new password is " . $password;
+
+      $sendRegistrationMail = new rafflyMail;
+      $sendRegistrationMail->setEmailUsername($emailUsername);
+      $sendRegistrationMail->setEmailPassword($emailPassword);
+      $sendRegistrationMail->sendMailRaffly($email, $message, $reset);
+
+      echo "<br>changing pass " . $emailUsername . " " . $emailPassword . " ";
+
+      $updateResult = $collection->updateOne(['email' => $email], ['$set' => ['password' => password_hash($password, PASSWORD_DEFAULT)]]);
     }
 }
 ?>
