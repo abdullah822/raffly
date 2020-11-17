@@ -74,7 +74,7 @@ If you have not submitted this request, it is safe to ignore this message.<br><b
 
 Sincerely, <br> 
 The Raffly Team";
-            $sendRegistrationMail->sendMailRaffly($_POST['uname'], $_POST['email'], $urlToken, $message);
+            $sendRegistrationMail->sendMailRaffly($_POST['uname'], $_POST['email'], $message);
             //insert data
             $result = $collection->insertOne($user);
             header('Location: https://rafflyraffles.com/success');
