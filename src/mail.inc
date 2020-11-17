@@ -12,7 +12,7 @@ class rafflyMail {
     function setEmailPassword($passwords) {
         $this->password = $passwords;
     }
-    function sendMailRaffly($name,$address,$url,$message) {
+    function sendMailRaffly($name,$address,$message) {
         //Create a new PHPMailer instance
         $mail = new PHPMailer();
         //Tell PHPMailer to use SMTP
