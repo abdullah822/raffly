@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+  <h1>My Admin Page</h1>
+  <p>You must leave here now.</p>
+
+
+
+  <div style="text-align:center; padding 50%;"><button> <a href="https://rafflyraffles.com">Go Home</a></button></div>
+
+</body>
+
+</html>
