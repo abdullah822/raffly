@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Testing</title>
+
+    <style>
+        body {
+            width: 100%;
+            text-align: center;
+            padding-top: 20px;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            margin: 0 auto;
+            width: 100%;
+            height:auto;
+        }
+        .card {
+            margin: 0 auto;
+            text-align: left;
+            width:33%;
+        }
+
+        li {
+            list-style-type: none;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="wrapper" id="wrapper">
+    
+    </div>
+
+
+    <script>
+        let url = 'middle/php/getRaffles.php';
+
+        
+            fetch(url, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+                .then((res) => { return res.json() })
+                .then((data) => {
+                    let result = `<div id="db-list">`;
+                    count = 0;
+                    finish = [];
+                    data.forEach((raffle) => {
+                        const { id, title, description, startTime,
+                            endTime, company, productImage, quantity,
+                            size, format, unit_cost, productName } = raffle
+                        start = new Date(startTime.$timestamp.t * 1000);
+                        end = new Date(endTime.$timestamp.t * 1000);
+                        expire = '';
+                        count++;
+                        result +=
+                            `
+                        <div class="card" style="display:block;">
+                                <div class="card-wrapper">
+                                    <details>
+                                        <summary>Raffle: ${title}</summary>
+                                    <ul style="text-align:left;">
+                                        <li class="" name="countdown[]" id="${id.$oid}" >ID: ${id.$oid}</li>
+                                        <li class="mbr-text mbr-fonts-style display-7">Desc: ${description}</li>
+                                        <li class="mbr-text mbr-fonts-style display-7">Start: ${start}</li>
+                                        <li class="mbr-text mbr-fonts-style display-7">End: ${end}</li>
+                                        <li class="mbr-text mbr-fonts-style display-7">Company: ${company}</li>
+                                        <li class="mbr-text mbr-fonts-style display-7">Product Name: ${productName}</li>
+                                        <li class="mbr-text mbr-fonts-style display-7">Unit Cost: ${unit_cost}</li>
+                                        <li class="mbr-text mbr-fonts-style display-7">Quantity: ${quantity}</li>
+                                        <li class="mbr-text mbr-fonts-style display-7">Size: ${size}</li>
+                                        <li class="mbr-text mbr-fonts-style display-7">Format: ${format}</li>
+                                    </ul>
+                                    </details>
+                                </div>
+                                </div>
+                            </div>
+                    </div>`;
+
+                        finish.push(end);
+
+                        document.getElementById('wrapper').innerHTML = result;
+                    });
+                })
+                .catch(err => console.log('Request Failed', err)); // Catch errors
+        
+
+        //function dump(obj) {
+  //          var out = '';
+    //        for (var i in obj) {
+      //          out += i + ": " + obj[i] + "\n";
+        //    }
+
+            // or, if you wanted to avoid alerts...
+
+          //  var pre = document.createElement('pre');
+          //  pre.innerHTML = out;
+            //result.appendChild(pre)
+        //}
+    </script>
+
+</body>
+
+
+
+</html>
