@@ -1,6 +1,6 @@
 <?php
 include "mongod.inc";
-define("RECAPTCHA_V3_SECRET_KEY", '6Ld3jNkZAAAAAH2ThcRFyDXkiNCyr1GjJrYqeJOY');
+define("RECAPTCHA_V3_SECRET_KEY", '6Ld3jNkZAAAAAHGXT15BnKd4cDJcTbvPD7ofMnCz');
 
 $token = $_POST['g-recaptcha-response'];
 
