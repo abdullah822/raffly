@@ -18,13 +18,24 @@ class Mongod {
     //assign user to raffle NEEDS UPDATE T0 CHECK
     //IF USER HAS ALREADY ENTERED RAFFLE
     function enterRaffle($raffleID, $user, $client) {
+        $collection = $client->Raffly->Users;
+        $fetch = $collection->findOne(array("username" => $user));
+        $ip = $fetch['ip'];
         $collection = $client->Raffly->Raffle;
-        $date = date_create();
-        $entry = array("user" => $user, "dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)), "size" => "smol");
-        $updateResult = $collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($raffleID) ], ['$push' => ['entries' => $entry]]);
+        $fetch = $collection->count(array('_id' => new MongoDB\BSON\ObjectID($raffleID), "ip" => $ip));
+        if(!isset($fetch))
+        {
+          $date = date_create();
+          $entry = array("user" => $user, "dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)), "size" => "smol", "ip" => $ip);
+          $updateResult = $collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($raffleID) ], ['$push' => ['entries' => $entry]]);
         //  printf("Matched %d document(s)\n", $updateResult->getMatchedCount());
         //printf("Modified %d document(s)\n", $updateResult->getModifiedCount());
 
+        }
+        else
+        {
+          echo "You have already entered this raffle";
+        }
     }
     //generates alphanumeric tokens
     private function randomString($input, $strength = 16) {
@@ -43,10 +54,11 @@ class Mongod {
         $reset = false;
         //set which collection to instert to
         $collection = $client->Raffly->Users;
-        $exists = $collection->count(array("username" => $_POST['uname']));
+        $exists_username = $collection->count(array("username" => $_POST['uname']));
+        $exists_ip = $collection->count(array("ip" => $_POST['ip']));
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $token = $this->randomString('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 8);
-        if (!$exists) {
+        if (!$exists_ip && !$exists_username) {
             $age = date_diff(date_create($_POST['date']), date_create('now'), True)->y;
             $date = date_create('now');
             $user = array("username" => $_POST['uname'],
