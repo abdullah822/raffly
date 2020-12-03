@@ -18,14 +18,46 @@ class Mongod {
     }
     //assign user to raffle NEEDS UPDATE T0 CHECK
     //IF USER HAS ALREADY ENTERED RAFFLE
-    function enterRaffle($raffleID, $user, $client) {
-        $collection = $client->Raffly->Raffle;
-        $date = date_create();
-        $entry = array("user" => $user, "dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)), "size" => "smol");
-        $updateResult = $collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($raffleID) ], ['$push' => ['entries' => $entry]]);
-        //  printf("Matched %d document(s)\n", $updateResult->getMatchedCount());
-        //printf("Modified %d document(s)\n", $updateResult->getModifiedCount());
-        
+    function enterRaffle($raffleID, $user, $client, $size) {
+	$collection = $client->Raffly->Users;
+	$fetch = $collection->findOne(array("username" => $user));
+	$ip = $fetch['ip'];
+	$collection = $client->Raffly->Raffle;
+	$fetch = $collection->findOne(array('_id' => new MongoDB\BSON\ObjectID($raffleID)));
+	$cond = true;
+	$d = $fetch['entries'];
+//		ob_start();
+//		var_dump($d);
+//		$data = ob_get_clean();	
+//		$f = fopen("tf.txt", "w");
+//		fwrite($f,$data);
+	$len = count($d);
+	for($i=0;$i < $len;$i++)
+	{
+		if($d[$i]['ip'] == $ip)
+		{
+			$cond = false;
+//			$c1 = $d[$i]['ip'];
+		}
+	}
+//	fwrite($f, $c1);
+//	fwrite($f, $ip);
+//	fclose($f);
+//	return;
+
+	
+	if($cond)
+	{
+		$date = date_create();
+		$entry = array("user" => $user, "dateCreated" => new MongoDB\BSON\Timestamp(0, date_timestamp_get($date)), "size" => $size, "ip" => $ip);
+		$updateResult = $collection->updateOne(['_id' => new MongoDB\BSON\ObjectID($raffleID) ], ['$push' => ['entries' => $entry]]);
+		echo "Success";
+	}
+	else
+	{
+		echo "You have already entered this raffle";
+//		fwrite($f, "yoyoyo");
+	}
     }
     //generates alphanumeric tokens
     private function randomString($input, $strength = 16) {
@@ -146,13 +178,87 @@ else {
 }
         echo json_encode($returnArray);
     }
+      function getRafflesComplete($client) {
+        $collection = $client->Raffly->Raffle;
+        
+        $limit = $_POST['limit'];
+        $skip = $_POST['skip'];
+        //slices browser get variable to obtain the raffle hash. may fail if it slices invalid data
+        $raffleID=substr($_GET['t'],6);
+        try { 
+        $id= new MongoDB\BSON\ObjectID($raffleID);
+        
+        }
+        catch(Exception $e) {
+        echo json_encode("Token not valid");
+        exit();
+        }
+        
+        //slice to obtain the token
+        $token=substr($_GET['t'],0,6);
+        
+        /**allows for a limit on the number of results to look for to be set and for a number to be skipped
+        this will allow for page 1 to 2,3,4 of results without needing to fetch all the data each time
+        **/
+        if (!is_null($limit) and $limit < 0 and is_null($skip)) {
+            $fetchAll = $collection->find(array("complete" => true,'_id'=>$id), [limit => $limit]);
+        } elseif (!is_null($limit) and $limit < 0 and !is_null($skip) and $skip > 0) {
+            $fetchAll = $collection->find(array("complete" => true,'_id'=>$id), [limit => $limit, skip => $skip]);
+        } else {
+            $fetchAll = $collection->find(array("complete" => true,'_id'=>$id));
+        }
+        
+        
+        $returnArray = [];
+        $tokensArray=[];
+        $iterations=0;
+        $tokensArray=$fetchAll->toArray();
+        
+       //accesses winner array and iterates to validate if any of the winners have the same token as the user
+        foreach ($tokensArray[0]['winner'] as $winnerToken){
+        $iterations+=1;
+        if ($winnerToken['token']===$token){
+          break;        
+        }
+        elseif ($winnerToken['token']!=$token and $iterations==count($winnerToken)){
+        echo json_encode('Token not valid');
+        exit();
+        }
+        }
+      
+         //loops for all raffles and indexes data to be used for frontend
+      foreach ($tokensArray as $doc) {
+       
     
+    $product = $doc["products"][0];
+    $rafflyFetch = array(
+
+    "title" => $doc["title"],
+    "description" => $doc["description"],
+    "startTime" => $doc["startTime"],
+    "endTime" => $doc["endTime"],
+    "id" => $doc["_id"],
+    "company" => $doc["company"],
+    "productImage" => $product["productImage"],
+    "quantity" => $product["quantity"],
+    "size" => $product["size"],
+    "format" => $product["format"],
+    "unit_cost" =>$product["unit_cost"],
+    "productName" => $product["productName"]);
+
+    array_push($returnArray, $rafflyFetch);
+}
+        echo json_encode($returnArray);
+    }
+    
+
+
     function createRaffle($client) {
         $date = date_create();
         //$sizeArray=explode(',', $_POST['size']);
         $collection=$client->Raffly->Raffle;
-        $startTime=new  \MongoDB\BSON\UTCDateTime(strtotime($_POST['startTime'])* 1000);
-        $endTime=new  \MongoDB\BSON\UTCDateTime(strtotime($_POST['endTime'])* 1000);
+        $startTime=new  \MongoDB\BSON\Timestamp(0,$_POST['startTime']/1000);
+        $endTime=new  \MongoDB\BSON\Timestamp(0,$_POST['endTime']/1000);
        $dataToInsert=array(
 "title"=>$_POST['title'],
 "description"=>$_POST['description'],
@@ -167,21 +273,72 @@ else {
 "quantity"=>$_POST['quantity'],
 "productName"=>$_POST['productTitle'],
 "ProductDescription"=>$_POST['productDescription'],
-"unit_cost"=>$_POST['unitCost'],
+"unit_cost"=>$_POST['unit_cost'],
 "format"=>$_POST['format'],
-"productImage"=>$_POST['image'],
+"productImage"=>"http://rafflyraffles.com/assets/images/".$_FILES["imageFile"]["name"],
 "size"=>$_POST['size']
 ))
 );
-if ($endTime>time()){
+if ($_POST['endTime']>time()){
 
 $insertResult=$collection->insertOne($dataToInsert);
 $documentID=$insertResult->getInsertedId();
 
+$target_dir = "/var/www/html/assets/images/";
+
+$target_file = $target_dir . basename($_FILES["imageFile"]["name"]);
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+// Check if image file is a actual image or fake image
+if(isset($_POST["submit"])) {
+  $check = getimagesize($_FILES["imageFile"]["tmp_name"]);
+  if($check !== false) {
+    echo "File is an image - " . $check["mime"] . ".";
+    $uploadOk = 1;
+  } else {
+    echo "File is not an image.";
+    $uploadOk = 0;
+  }
+}
+
+// Check if file already exists
+if (file_exists($target_file)) {
+  echo "Sorry, file already exists.";
+  $uploadOk = 0;
+}
+
+// Check file size
+if ($_FILES["imageFile"]["size"] > 500000) {
+  echo "Sorry, your file is too large.";
+  $uploadOk = 0;
+}
+
+// Allow certain file formats
+if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+&& $imageFileType != "gif" ) {
+  echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+  $uploadOk = 0;
+}
+
+// Check if $uploadOk is set to 0 by an error
+if ($uploadOk == 0) {
+  echo "Sorry, your file was not uploaded.";
+// if everything is ok, try to upload file
+} else {
+  if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $target_file)) {
+    echo "The file ". htmlspecialchars( basename( $_FILES["imageFile"]["name"])). " has been uploaded.";
+  } else {
+    echo "Sorry, there was an error uploading your file.";
+  }
+}
+
 $duration=$_POST['endTime']-time();
 $schedule="php /var/www/html/middle/php/raffleWinners.php ".$documentID." | at ". $duration;
-system($schedule);
+shell_exec($schedule);
 }
+header("Location: https://rafflyraffles.com/admin");
+exit();
 }
     
     //php that checks the link and verifies the proper user
