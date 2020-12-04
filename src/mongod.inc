@@ -4,6 +4,7 @@ include "auth.php";
 require __DIR__ . "/vendor/autoload.php";
 use \MongoDB\Client as Mongo;
 include 'mail.inc';
+
 class Mongod {
     //initiate mongodb connection
     function connect() {
@@ -73,8 +74,9 @@ class Mongod {
     function insertNewUser($user, $client) {
         global $emailUsername;
         global $emailPassword;
-        //set which collection to instert to
         $collection = $client->Raffly->Users;
+	$fetch = $collection->findOne(array("ip" => $_POST['ip']));
+        //set which collection to instert to
         $exists = $collection->count(array("username" => $_POST['uname']));
         $permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $token = $this->randomString($permitted_chars, 8);
@@ -91,7 +93,7 @@ class Mongod {
        $response = curl_exec($verify);
        $responseData = json_decode($response);
 if($responseData->success) {
-     if (!$exists) {
+     if (!$exists && !isset($fetch) && $_POST['state'] != $_POST['zip']) {
             $age = date_diff(date_create($_POST['date']), date_create('now'), True)->y;
             $date = date_create('now');
             $user = array("username" => $_POST['uname'], 
@@ -120,7 +122,7 @@ If you have not submitted this request, it is safe to ignore this message.<br><b
 
 Sincerely, <br> 
 The Raffly Team";
-            $sendRegistrationMail->sendMailRaffly($_POST['uname'], $_POST['email'], $message);
+            $sendRegistrationMail->sendMailRaffly($_POST['uname'], $_POST['email'], 'Verify Your Raffly Email', $message);
             //insert data
             $result = $collection->insertOne($user);
             header('Location: https://rafflyraffles.com/success');
@@ -214,10 +216,16 @@ else {
         $iterations=0;
         $tokensArray=$fetchAll->toArray();
         
+        
+        if (count($tokensArray[0]['winner'])==0){
+        echo "Bad Token";
+        exit();
+        }
+        
        //accesses winner array and iterates to validate if any of the winners have the same token as the user
         foreach ($tokensArray[0]['winner'] as $winnerToken){
         $iterations+=1;
-        if ($winnerToken['token']===$token){
+        if ($winnerToken['token']==$token){
           break;        
         }
         elseif ($winnerToken['token']!=$token and $iterations==count($winnerToken)){
@@ -332,11 +340,14 @@ if ($uploadOk == 0) {
     echo "Sorry, there was an error uploading your file.";
   }
 }
+ 
+$duration=$_POST['endTime']/1000;
+$durationAt=date("YmdHi.s",$duration);
+echo $durationAt;
+$command="/bin/bash /usr/bin/sudo /usr/bin/php /var/www/html/middle/php/raffleWinners.php ".$documentID." | /usr/bin/at -t ".$durationAt." 2>&1";
+$result1 = exec($command, $output, $return);
 
-$duration=$_POST['endTime']-time();
-$schedule="php /var/www/html/middle/php/raffleWinners.php ".$documentID." | at ". $duration;
-shell_exec($schedule);
-}
+
 header("Location: https://rafflyraffles.com/admin");
 exit();
 }
@@ -358,5 +369,6 @@ exit();
             exit();
         }
     }
+}
 }
 ?>
